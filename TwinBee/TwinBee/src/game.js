@@ -1,5 +1,5 @@
 import Menu from './menu.js';
-
+import Level  from './level.js';
 let config = {
     type: Phaser.AUTO,
     parent: 'juego',
@@ -15,7 +15,7 @@ let config = {
         height: 256,
 		zoom: 1
     },
-    scene: [Menu],
+    scene: [Menu , Level],
     physics: { 
         default: 'arcade', 
         arcade: { 

@@ -54,10 +54,9 @@ export default class menu extends Phaser.Scene {
         button1.setOrigin(0.5, 0.5);  // Establece el origen en el centro del texto
         button1.setInteractive({ useHandCursor: true });  // Hace el texto interactivo (useHandCursor es para que el clic cambie, no es obligatorio)
         
-        // Configurar evento de clic para el botón
+        // EVENTO
         button1.on('pointerdown', () => {
-            console.log('Haz clic en el botón');
-            // Agrega aquí la lógica que deseas ejecutar al hacer clic en el botón
+            this.playGame(1)
         });
 
         //Boton 2
@@ -71,11 +70,19 @@ export default class menu extends Phaser.Scene {
         button2.setOrigin(0.5, 0.5);  // Establece el origen en el centro del texto
         button2.setInteractive({ useHandCursor: true });  // Hace el texto interactivo (useHandCursor es para que el clic cambie, no es obligatorio)
         
-        // Configurar evento de clic para el botón
+        // EVENTO
         button2.on('pointerdown', () => {
-            console.log('Haz clic en el botón');
-            // Agrega aquí la lógica que deseas ejecutar al hacer clic en el botón
+            this.playGame(2);
         });
+    }
+
+
+    //Cuando inicias la escena, puedes pasar un array de datos a través del método 
+    //this.scene.start desde otra escena. Por ejemplo:
+    //this.scene.start('MiEscena', { jugador: 'John', nivel: 5 });
+    //Luego en el metodo init(data), los podemos recoger con data. (Ej: data.jugador)
+    playGame(n){
+        this.scene.start("Level", {datos: n})
     }
 
     colorAleatorio() {
