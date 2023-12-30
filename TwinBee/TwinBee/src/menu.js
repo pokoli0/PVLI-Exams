@@ -82,7 +82,7 @@ export default class menu extends Phaser.Scene {
     //this.scene.start('MiEscena', { jugador: 'John', nivel: 5 });
     //Luego en el metodo init(data), los podemos recoger con data. (Ej: data.jugador)
     playGame(n){
-        this.scene.start("Level", {datos: n})
+        this.scene.start("Level", {nPlayers: n})
     }
 
     colorAleatorio() {
