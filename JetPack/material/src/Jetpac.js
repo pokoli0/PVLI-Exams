@@ -81,7 +81,7 @@ export default class Jetpac extends Phaser.Scene{
         else if(this.diff.datos == 'hard')
         {
             this.unidades = 5;
-            this.meteorRespawn = 500;
+            this.meteorRespawn = 600;
         }
 
 
