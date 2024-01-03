@@ -17,23 +17,23 @@ export default class level extends Phaser.Scene {
     }
 
     create(){
-        //Constantes útiles jiji
-        const canvasWidth = this.sys.game.config.width;  // Ancho del canvas
-        const canvasHeight = this.sys.game.config.height;  // Alto del canvas
+        //Constantes útiles (no uso const porque seria solo del ámbito create())
+        this.canvasWidth = this.sys.game.config.width;  // Ancho del canvas
+        this.canvasHeight = this.sys.game.config.height;  // Alto del canvas -> 256
 
         //------BACKGROUND------
-        //Lo nombramos y creamos en canvasHeight. Si queremos que empiece desde el principio de la imagen,
-        //en el Y tendremos que poner 0 y al avanzar -=1 (en el update)
-        this.background = this.add.sprite(canvasWidth/2, canvasHeight, 'background');
+        //Añadimos background en 0,0, con setOrigin!!
+        this.background = this.add.image(0, 256, 'background');
+        this.background.setOrigin(0, 1);  // La imagen desde la esquina inferior izquierda
     }
 
     update(){
-        this.background.y += 0.5; //Movemos background, sensación de que estamos avanzando
-        console.log(this.background.y);
+        this.background.y += 0.5; //Movemos background de abajo a arriba, sensación de que estamos avanzando
+        //console.log(this.background.y);
 
-        if (this.background.y >= this.sys.game.config.height) {
-            // Reiniciamos la posición del fondo al principio
-            this.background.y = 0;
-        }
+        //-------------PARALLAX-------------- (en TwinBee no hace falta)
+        // if (this.background.y >= this.background.height) {  // Cuando la pos en Y sea mayor o igual al alto de la imagen
+        //     this.background.y = this.canvasHeight;          // Reiniciamos la posición del fondo al canvasHeight
+        // }
     }
 }
