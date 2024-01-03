@@ -19,6 +19,8 @@ export default class level extends Phaser.Scene {
         this.load.spritesheet('twinbee', './assets/images/twinbee.png', {frameWidth: 16, frameHeight: 16})
         this.load.spritesheet('winbee', './assets/images/winbee.png', {frameWidth: 16, frameHeight: 16})
 
+        //------CARGA DE SONIDOS------
+
     }
 
     create(){
@@ -40,6 +42,11 @@ export default class level extends Phaser.Scene {
             this.twinbee = new twinbee(this, this.canvasWidth/4, this.canvasHeight/1.2, "twinbee");
             this.winbee = new winbee(this, this.canvasWidth/1.2, this.canvasHeight/1.2, "winbee");
         }
+
+        //--------ANIMACIONES-------
+        this.animaciones(); //porque ocupa mucho
+        
+        
         
     }
 
@@ -47,6 +54,7 @@ export default class level extends Phaser.Scene {
         console.log("win");
     }
 
+    
     update(){
         this.background.y += 0.5; //Movemos background de abajo a arriba, sensación de que estamos avanzando
         //console.log(this.background.y);
@@ -62,5 +70,56 @@ export default class level extends Phaser.Scene {
         // }
 
 
+    }
+
+    animaciones(){
+        this.anims.create({
+            key: 'idle',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('twinbee', { start: 0, end: 0 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        this.anims.create({
+            key: 'left',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('twinbee', { start: 1, end: 1 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        this.anims.create({
+            key: 'right',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('twinbee', { start: 2, end: 2 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        this.anims.create({
+            key: 'shoot',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('twinbee', { start: 3, end: 3 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        this.anims.create({
+            key: 'widle',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('winbee', { start: 0, end: 0 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        this.anims.create({
+            key: 'wleft',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('winbee', { start: 1, end: 1 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        this.anims.create({
+            key: 'wright',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('winbee', { start: 2, end: 2 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        this.anims.create({
+            key: 'wshoot',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('winbee', { start: 3, end: 3 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
     }
 }

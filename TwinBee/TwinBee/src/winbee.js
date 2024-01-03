@@ -22,6 +22,7 @@ export default class winbee extends Phaser.GameObjects.Container {
     preUpdate(t, dt) {
 
         this.movimiento();
+        this.disparo();
 
         // Método para que no se salga del canvas omg
         this.winbee.x = Phaser.Math.Clamp(this.winbee.x, 0, this.scene.sys.game.canvas.width);
@@ -35,19 +36,28 @@ export default class winbee extends Phaser.GameObjects.Container {
 
         if (this.arriba.isDown) {
             this.winbee.body.setVelocityY(-this.speed);
-        } else if (this.abajo.isDown) {
+            this.winbee.play('widle');
+        }
+        else if (this.abajo.isDown) {
             this.winbee.body.setVelocityY(this.speed);
+            this.winbee.play('widle');
         }
 
         if (this.izda.isDown) {
             this.winbee.body.setVelocityX(-this.speed);
-        } else if (this.dcha.isDown) {
+            this.winbee.play('wleft');
+        }
+        else if (this.dcha.isDown) {
             this.winbee.body.setVelocityX(this.speed);
+            this.winbee.play('wright');
         }
     }
 
     disparo(){
-
+        if(this.intro.isDown){
+            console.log("pium");
+            this.winbee.play('wshoot');
+        }
     }
 
 }
