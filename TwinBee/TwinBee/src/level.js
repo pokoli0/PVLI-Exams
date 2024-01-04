@@ -54,30 +54,25 @@ export default class level extends Phaser.Scene {
         // En el container, con this.scene.sound.play('shoot');
 
 
-        //------POOL DE BULLETS---------
+        //------GRUPO DE BULLETS---------
         // Creamos grupo y método instanciaBala()
         this.bulletGroup = this.add.group();
-
-        
-        
-        //para dejar de usarlo
-        //this.time.removeEvent(timer);
-
         
         
     }
 
-    // Se podrá instanciar una bala por segundo.
+    // Se podrá instanciar una bala por segundo. Y solo puede haber hasta 100 balas instanciadas.
     instanciaBala(x, y){
-        //Instancia de la bala
-        this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
+        if(this.bulletGroup.getChildren().length < 100){
+            //Instancia de la bala
+            this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
 
-        //La añadimos al grupo
-        this.bulletGroup.add(this.bullet);
+            //La añadimos al grupo
+            this.bulletGroup.add(this.bullet);
 
-        // Sonido al instanciar
-        this.sound.play('shoot');
-
+            // Sonido al instanciar
+            this.sound.play('shoot');
+        }
         // COLISIONES DE LA BALA
         // *** OVERLAP *** detecta si dos objetos se superponen SIN provocar colision fisica
         // Phaser.Physics.Arcade.World.overlap(object1, object2, callback);
@@ -95,6 +90,8 @@ export default class level extends Phaser.Scene {
 
     
     update(){
+        console.log(this.bulletGroup.getChildren().length);
+
         this.background.y += 0.5; //Movemos background de abajo a arriba, sensación de que estamos avanzando
         //console.log(this.background.y);
 

@@ -53,7 +53,8 @@ export default class twinbee extends Phaser.GameObjects.Container {
 
     disparo(){
         if(this.space.isDown){
-            this.scene.instanciaBala(this.twinbee.x, this.twinbee.y)
+            this.scene.instanciaBala(this.twinbee.x, this.twinbee.y);
+            
         }
     }
 
