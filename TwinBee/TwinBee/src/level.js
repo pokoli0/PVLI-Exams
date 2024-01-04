@@ -1,5 +1,6 @@
 import twinbee from "./twinbee.js";
 import winbee from "./winbee.js";
+import bullet from "./bullet.js";
 
 export default class level extends Phaser.Scene {
     constructor() {
@@ -14,6 +15,7 @@ export default class level extends Phaser.Scene {
     preload(){
         //------CARGA DE IMAGENES------
         this.load.image('background', './assets/images/background_hcontrast.png'); //background.png: 256 x 1536
+        this.load.image('bullet', './assets/images/bullet.png');
 
         //------CARGA DE SPRITESHEETS------
         this.load.spritesheet('twinbee', './assets/images/twinbee.png', {frameWidth: 16, frameHeight: 16});
@@ -33,7 +35,7 @@ export default class level extends Phaser.Scene {
         //------BACKGROUND------
         //Añadimos background en 0,0, con setOrigin!!
         this.background = this.add.image(0, 256, 'background');
-        this.background.setOrigin(0, 1);  // La imagen desde la esquina inferior izquierda
+        this.background.setOrigin(0, 1);  // La imagen desde la esquina inferior izquierda (porque se mueve de abajo a arriba, si se moviera de arriba abajo -> setOrigin(0,0))
 
 
         //------TWINBEE & WINBEE-------
@@ -51,7 +53,39 @@ export default class level extends Phaser.Scene {
         //-------SONIDOS----------
         // En el container, con this.scene.sound.play('shoot');
 
+
+        //------POOL DE BULLETS---------
+        // Creamos grupo y método instanciaBala()
+        this.bulletGroup = this.add.group();
+
         
+        
+        //para dejar de usarlo
+        //this.time.removeEvent(timer);
+
+        
+        
+    }
+
+    // Se podrá instanciar una bala por segundo.
+    instanciaBala(x, y){
+        //Instancia de la bala
+        this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
+
+        //La añadimos al grupo
+        this.bulletGroup.add(this.bullet);
+
+        // Sonido al instanciar
+        this.sound.play('shoot');
+
+        // COLISIONES DE LA BALA
+        // *** OVERLAP *** detecta si dos objetos se superponen SIN provocar colision fisica
+        // Phaser.Physics.Arcade.World.overlap(object1, object2, callback);
+        //this.physics.add.overlap(this.playerObj.getPlayerSprite(), this.bullet.getSprite(), this.destroyEnemy, null, this);
+    }
+
+    // El enemigo colisiona con una bala
+    destroyEnemy(){
         
     }
 
