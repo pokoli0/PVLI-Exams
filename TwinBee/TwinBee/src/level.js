@@ -47,23 +47,33 @@ export default class level extends Phaser.Scene {
             this.winbee = new winbee(this, this.canvasWidth/1.4, this.canvasHeight/1.2, "winbee");
         }
 
+        
         //--------ANIMACIONES-------
         this.animaciones(); // Método porque ocupa mucho
         
+
         //-------SONIDOS----------
-        // En el container, con this.scene.sound.play('shoot');
+        // En el container, con this.scene.sound.play('shoot').
 
 
-        //------GRUPO DE BULLETS---------
+        //------POOL DE BULLETS---------
         // Creamos grupo y método instanciaBala()
         this.bulletGroup = this.add.group();
+
+        // Métodos útiles de los pools:
+        // - this.group.add(sprite);        // Añade un objeto (o una matriz de objetos) al grupo.
+        // - this.group.getChildren();      // Devuelve un array con todos los objetos del grupo.
+        // - this.group.clear(true, true);  // Elimina todos los objetos del grupo.
+        // - this.group.killAndHide();      // Desactiva y oculta todos los objetos del grupo.
+        // - this.group.getLength();        // Devuelve la cantidad de objetos en el grupo.
         
         
     }
 
     // Se podrá instanciar una bala por segundo. Y solo puede haber hasta 100 balas instanciadas.
     instanciaBala(x, y){
-        if(this.bulletGroup.getChildren().length < 100){
+        //Si hay menos de 100 balas en el grupo, se podrán añadir más.
+        if(this.bulletGroup.getLength() < 100){
             //Instancia de la bala
             this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
 
@@ -90,8 +100,6 @@ export default class level extends Phaser.Scene {
 
     
     update(){
-        console.log(this.bulletGroup.getChildren().length);
-
         this.background.y += 0.5; //Movemos background de abajo a arriba, sensación de que estamos avanzando
         //console.log(this.background.y);
 
