@@ -56,7 +56,7 @@ export default class winbee extends Phaser.GameObjects.Container {
     disparo(){
         if(this.intro.isDown){
             console.log("pium");
-            this.winbee.play('wshoot');
+            this.scene.sound.play('shoot');
         }
     }
 

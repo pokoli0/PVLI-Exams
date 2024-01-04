@@ -16,10 +16,12 @@ export default class level extends Phaser.Scene {
         this.load.image('background', './assets/images/background_hcontrast.png'); //background.png: 256 x 1536
 
         //------CARGA DE SPRITESHEETS------
-        this.load.spritesheet('twinbee', './assets/images/twinbee.png', {frameWidth: 16, frameHeight: 16})
-        this.load.spritesheet('winbee', './assets/images/winbee.png', {frameWidth: 16, frameHeight: 16})
+        this.load.spritesheet('twinbee', './assets/images/twinbee.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('winbee', './assets/images/winbee.png', {frameWidth: 16, frameHeight: 16});
 
         //------CARGA DE SONIDOS------
+        this.load.audio('shoot', './assets/sounds/shoot.wav');
+
 
     }
 
@@ -40,12 +42,15 @@ export default class level extends Phaser.Scene {
         }
         else{
             this.twinbee = new twinbee(this, this.canvasWidth/4, this.canvasHeight/1.2, "twinbee");
-            this.winbee = new winbee(this, this.canvasWidth/1.2, this.canvasHeight/1.2, "winbee");
+            this.winbee = new winbee(this, this.canvasWidth/1.4, this.canvasHeight/1.2, "winbee");
         }
 
         //--------ANIMACIONES-------
-        this.animaciones(); //porque ocupa mucho
+        this.animaciones(); // Método porque ocupa mucho
         
+        //-------SONIDOS----------
+        // En el container, con this.scene.sound.play('shoot');
+
         
         
     }

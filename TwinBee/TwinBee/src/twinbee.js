@@ -54,7 +54,7 @@ export default class twinbee extends Phaser.GameObjects.Container {
     disparo(){
         if(this.space.isDown){
             console.log("pium");
-            this.twinbee.play('shoot');
+            this.scene.sound.play('shoot');
         }
     }
 
