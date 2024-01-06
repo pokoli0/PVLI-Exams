@@ -1,6 +1,7 @@
 import twinbee from "./twinbee.js";
 import winbee from "./winbee.js";
 import bullet from "./bullet.js";
+import enemy from "./enemy.js";
 
 export default class level extends Phaser.Scene {
     constructor() {
@@ -20,9 +21,13 @@ export default class level extends Phaser.Scene {
         //------CARGA DE SPRITESHEETS------
         this.load.spritesheet('twinbee', './assets/images/twinbee.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('winbee', './assets/images/winbee.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemy', './assets/images/enemy.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('explosion', './assets/images/explosion.png', {frameWidth: 16, frameHeight: 16});
+        
 
         //------CARGA DE SONIDOS------
         this.load.audio('shoot', './assets/sounds/shoot.wav');
+        this.load.audio('explosionSound', './assets/sounds/explosion.wav');
 
 
     }
@@ -68,7 +73,19 @@ export default class level extends Phaser.Scene {
         // - this.group.getLength();        // Devuelve la cantidad de objetos en el grupo.
 
         //-------TIMER-----------
-        
+        // this.timer = this.time.addEvent({
+        //     delay: 1000, // 1000 milisegundos = 1 segundo
+        //     callback: ,
+        //     callbackScope: this, // this es scene!!!
+        //     loop: true
+        // });
+
+        //this.time.removeEvent(timer); // pararlo
+
+        //----------ENEMIES-----------
+        this.randomX = Math.random() * this.canvasWidth;
+        this.enemy = new enemy(this, this.randomX, 0, "enemy");
+
     }
 
     // Se podrá instanciar una bala por segundo. Y solo puede haber hasta 100 balas instanciadas.
@@ -129,6 +146,7 @@ export default class level extends Phaser.Scene {
     }
 
     animaciones(){
+        //TWINBEE-------------------------
         this.anims.create({
             key: 'idle',  // Nombre único de la animación
             frames: this.anims.generateFrameNumbers('twinbee', { start: 0, end: 0 }),  // Rango de frames
@@ -157,6 +175,7 @@ export default class level extends Phaser.Scene {
             frameRate: 10,  // Velocidad de reproducción en frames por segundo
             repeat: 0  // -1 para repetir indefinidamente, 0 para reproducir una vez
         });
+        //WINBEE------------------------
         this.anims.create({
             key: 'widle',  // Nombre único de la animación
             frames: this.anims.generateFrameNumbers('winbee', { start: 0, end: 0 }),  // Rango de frames
@@ -181,5 +200,20 @@ export default class level extends Phaser.Scene {
             frameRate: 10,  // Velocidad de reproducción en frames por segundo
             repeat: 0  // -1 para repetir indefinidamente, 0 para reproducir una vez
         });
+        //ENEMY-----------------------
+        this.anims.create({
+            key: 'eidle',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('enemy', { start: 0, end: 3 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+        });
+        //EXPLOSION----------------------
+        this.anims.create({
+            key: 'expidle',  // Nombre único de la animación
+            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 2 }),  // Rango de frames
+            frameRate: 10,  // Velocidad de reproducción en frames por segundo
+            repeat: 1  // REPETIR UNA VEZ
+        });
+
     }
 }
