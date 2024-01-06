@@ -12,8 +12,9 @@ export default class Meteor extends Phaser.GameObjects.Container{
         this.speed = 50; 
 
         this.meteor.setVelocity( //velocidad con la direccion del angulo
-            this.speed * Math.cos(Phaser.Math.DEG_TO_RAD * this.angle), 
-            this.speed * Math.sin(Phaser.Math.DEG_TO_RAD * this.angle));
+            this.speed * Math.cos(Phaser.Math.DEG_TO_RAD * this.angle),  //X
+            this.speed * Math.sin(Phaser.Math.DEG_TO_RAD * this.angle)   //Y
+        );
 
         this.scene.add.existing(this);
     }

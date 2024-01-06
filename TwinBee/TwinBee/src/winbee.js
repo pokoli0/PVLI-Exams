@@ -9,6 +9,8 @@ export default class winbee extends Phaser.GameObjects.Container {
 
         this.speed = 100;
 
+        this.canShoot = true;
+
         // registra la teclas
         this.dcha = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         this.izda = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -54,8 +56,14 @@ export default class winbee extends Phaser.GameObjects.Container {
     }
 
     disparo(){
-        if(this.intro.isDown){
+        if(this.intro.isDown && this.canShoot){
             this.scene.instanciaBala(this.winbee.x, this.winbee.y);
+            this.winbee.play('wshoot');
+        }
+
+        //Si se vuelve a levantar tecla
+        if(this.space.isUp){ 
+            this.canShoot = true
         }
     }
 

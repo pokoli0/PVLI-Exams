@@ -10,12 +10,16 @@ export default class twinbee extends Phaser.GameObjects.Container {
 
         this.speed = 100;
 
+        this.canShoot = true;
+
         // registra la teclas
         this.w = this.scene.input.keyboard.addKey('W');
         this.a = this.scene.input.keyboard.addKey('A');
         this.s = this.scene.input.keyboard.addKey('S');
         this.d = this.scene.input.keyboard.addKey('D');
         this.space = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+    
     }
 
     preUpdate(t, dt) {
@@ -51,13 +55,21 @@ export default class twinbee extends Phaser.GameObjects.Container {
         }
     }
 
+
     disparo(){
-        if(this.space.isDown){
+        if(this.space.isDown && this.canShoot){
+
             this.scene.instanciaBala(this.twinbee.x, this.twinbee.y);
-            
+
+            this.canShoot = false;
+            this.twinbee.play('shoot');
+
+        }
+
+        //Si se vuelve a levantar tecla
+        if(this.space.isUp){ 
+            this.canShoot = true;
         }
     }
-
-    //duda: como acceder a una animacion creada en level.js, para que se reproduzca al hacer una accion del container player.js
 
 }

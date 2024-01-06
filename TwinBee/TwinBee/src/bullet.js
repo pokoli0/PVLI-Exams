@@ -12,14 +12,12 @@ export default class bullet extends Phaser.GameObjects.Container {
     }
 
     preUpdate(t, dt) {
-
         this.movimiento();
 
         // Al salir del canvas se destruye
         if(this.bullet.y < 0 || this.bullet.x < 0 || this.bullet.y > this.scene.sys.game.canvas.height || this.bullet.x > this.scene.sys.game.canvas.width){
             this.deleteBullet();
         }
-        
     }
 
     movimiento(){

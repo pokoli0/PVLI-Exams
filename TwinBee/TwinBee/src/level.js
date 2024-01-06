@@ -47,7 +47,7 @@ export default class level extends Phaser.Scene {
             this.winbee = new winbee(this, this.canvasWidth/1.4, this.canvasHeight/1.2, "winbee");
         }
 
-        
+
         //--------ANIMACIONES-------
         this.animaciones(); // Método porque ocupa mucho
         
@@ -66,23 +66,35 @@ export default class level extends Phaser.Scene {
         // - this.group.clear(true, true);  // Elimina todos los objetos del grupo.
         // - this.group.killAndHide();      // Desactiva y oculta todos los objetos del grupo.
         // - this.group.getLength();        // Devuelve la cantidad de objetos en el grupo.
-        
+
+        //-------TIMER-----------
         
     }
 
     // Se podrá instanciar una bala por segundo. Y solo puede haber hasta 100 balas instanciadas.
     instanciaBala(x, y){
-        //Si hay menos de 100 balas en el grupo, se podrán añadir más.
-        if(this.bulletGroup.getLength() < 100){
-            //Instancia de la bala
-            this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
+        
+        this.BalaTimer = this.time.addEvent({
+            delay: 1000, // Milisegundos
+            callback: () => {
+                //Si hay menos de 100 balas en el grupo, se podrán añadir más.
+                if(this.bulletGroup.getLength() < 100){
+                    //Instancia de la bala
+                    this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
 
-            //La añadimos al grupo
-            this.bulletGroup.add(this.bullet);
+                    //La añadimos al grupo
+                    this.bulletGroup.add(this.bullet);
 
-            // Sonido al instanciar
-            this.sound.play('shoot');
-        }
+                    // Sonido al instanciar
+                    this.sound.play('shoot');
+
+                }
+            },
+            callbackScope: this,
+            loop: true
+        });
+        
+        
         // COLISIONES DE LA BALA
         // *** OVERLAP *** detecta si dos objetos se superponen SIN provocar colision fisica
         // Phaser.Physics.Arcade.World.overlap(object1, object2, callback);
@@ -137,9 +149,13 @@ export default class level extends Phaser.Scene {
         });
         this.anims.create({
             key: 'shoot',  // Nombre único de la animación
-            frames: this.anims.generateFrameNumbers('twinbee', { start: 3, end: 3 }),  // Rango de frames
+            //Orden especifico:
+            frames: [
+                { key: 'twinbee', frame: 3 }, // Cuarto frame
+                { key: 'twinbee', frame: 0 }, // Primer frame
+            ],
             frameRate: 10,  // Velocidad de reproducción en frames por segundo
-            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+            repeat: 0  // -1 para repetir indefinidamente, 0 para reproducir una vez
         });
         this.anims.create({
             key: 'widle',  // Nombre único de la animación
@@ -161,9 +177,9 @@ export default class level extends Phaser.Scene {
         });
         this.anims.create({
             key: 'wshoot',  // Nombre único de la animación
-            frames: this.anims.generateFrameNumbers('winbee', { start: 3, end: 3 }),  // Rango de frames
+            frames: this.anims.generateFrameNumbers('winbee', { start: 3, end: 0 }),  // Rango de frames
             frameRate: 10,  // Velocidad de reproducción en frames por segundo
-            repeat: -1  // -1 para repetir indefinidamente, 0 para reproducir una vez
+            repeat: 0  // -1 para repetir indefinidamente, 0 para reproducir una vez
         });
     }
 }
