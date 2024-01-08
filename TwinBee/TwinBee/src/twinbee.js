@@ -3,14 +3,14 @@ export default class twinbee extends Phaser.GameObjects.Container {
         super(scene, x, y);
 
         this.twinbee = this.scene.physics.add.sprite(x, y, key);
-
         
         // añade a la escena (level.js) el objeto entero
         this.scene.add.existing(this);
 
         this.speed = 100;
 
-        this.canShoot = true;
+        // CONTADOR DISPAROS
+        this.cooldown = 1000; // 1 bala por segundo
 
         // registra la teclas
         this.w = this.scene.input.keyboard.addKey('W');
@@ -19,13 +19,20 @@ export default class twinbee extends Phaser.GameObjects.Container {
         this.d = this.scene.input.keyboard.addKey('D');
         this.space = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    
+        //Si sólo queremos reaccionar ante un clic: 
+        //if (Phaser.Input.Keyboard.JustDown(this.w)) { ... }
+
     }
 
-    preUpdate(t, dt) {
-
+    preUpdate() {
         this.movimiento();
-        this.disparo();
+        this.tryShoot();
+
+        // Al pulsar la tecla de espacio, registra el tiempo actual
+        if (Phaser.Input.Keyboard.JustDown(this.space)) {
+            this.tiempoInicio = this.scene.time.now; 
+            console.log(this.tiempoInicio)
+        }
 
         // Método para que no se salga del canvas omg
         this.twinbee.x = Phaser.Math.Clamp(this.twinbee.x, 0, this.scene.sys.game.canvas.width);
@@ -55,21 +62,22 @@ export default class twinbee extends Phaser.GameObjects.Container {
         }
     }
 
+    tryShoot(){
+        if (this.tiempoInicio && this.scene.time.now - this.tiempoInicio >= this.cooldown && !this.hasShoot) {
+            console.log("Ha pasado 1000 ms desde que pulsaste la tecla de espacio");
+            this.shoot();
 
-    disparo(){
-        if(this.space.isDown && this.canShoot){
-
-            this.scene.instanciaBala(this.twinbee.x, this.twinbee.y);
-
-            this.canShoot = false;
-            this.twinbee.play('shoot');
-
-        }
-
-        //Si se vuelve a levantar tecla
-        if(this.space.isUp){ 
-            this.canShoot = true;
+            // Resetea el tiempoInicio para que puedas contar nuevamente
+            this.tiempoInicio = null;
+            this.hasShoot = true;
         }
     }
+
+    shoot(){
+        this.scene.instanciaBala(this.twinbee.x,this.twinbee.y);
+    }
+
+
+
 
 }

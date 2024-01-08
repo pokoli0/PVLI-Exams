@@ -1,0 +1,55 @@
+1. CARGA DE ARCHIVOS DE DATOS E IMÁGENES
+Para cargar el fichero de descripción del tile map, usamos tilemapTiledJSON() en preload()
+
+this.load.tilemapTiledJSON('tilemap', 'tilemap.json');
+
+El primer parámetro es el nombre del recurso en la cache
+El segundo es el fichero JSON que contiene la descripción del mapa
+
+Esto sólo carga el archivo del tilemap, no crea un tilemap en el juego
+
+Para cargar el atlas de patrones usaremos la carga de imagenes normal: load.image
+
+this.load.image('patronesTilemap', 'images/patrones.png');
+
+2. CREACIÓN DEL TILEMAP
+Para crear un tilemap usamos el subsistema make.tilemap y el recurso cargado en la cache como tilemap, en el método create() (no en preload())
+
+this.map = this.make.tilemap({ 
+  key: 'tilemap', 
+  tileWidth: 64, 
+  tileHeight: 64 
+});
+
+3. TEXTURAS DE LOS TILESETS
+Posteriormente creamos los tilesets, asignando las imágenes cargadas a los tileset usados en el tilemap:
+
+const tileset1 = this.map.addTilesetImage('nombreTilemap', 'claveTextura');
+La textura debe estar previamente cargada y el nombre de la textura en el mapa de tiles es conocido (está en el JSON exportado desde Tiled)
+
+Un mapa de tiles puede tener más de una textura asociada, por lo que hay que asignar el nombre usado en el editor al asignar al tileset al nombre de la textura cargada en la cache (está en el JSON exportado desde Tiled)
+
+Por ejemplo, 'patrones' y 'patronesFondo' son nombres de tilesets en Tiled—los que están en las pestañas:
+
+const tileset1 = this.map.addTilesetImage('patrones', 'idImagen');
+const tileset2 = this.map.addTilesetImage('patronesFondo', 'idImagen2');
+
+4. CREACIÓN DE LAS CAPAS
+Por último, es necesario crear las capas para que el mapa se visualice.
+
+Como hemos visto, en el editor de tiles podemos crear diferentes capas o layers
+
+Si hay capas creadas en el editor, podemos asignar estas capas (layers) en Phaser:
+
+// tileset1, tileset2 han sido creados con `addTilesetImage`
+this.backgroundLayer = 
+  this.map.createLayer('BackgroundLayer', 
+                             [tileset1, tileset2]);
+// funciona con y sin array
+this.groundLayer = 
+  this.map.createLayer('GroundLayer'
+                             , tileset1);
+this.foreground = 
+  this.map.createLayer('Foreground'
+                             , [tileset1, tileset2]);
+

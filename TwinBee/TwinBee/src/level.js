@@ -92,26 +92,18 @@ export default class level extends Phaser.Scene {
     // Se podrá instanciar una bala por segundo. Y solo puede haber hasta 100 balas instanciadas.
     instanciaBala(x, y){
         
-        this.BalaTimer = this.time.addEvent({
-            delay: 1000, // Milisegundos
-            callback: () => {
-                //Si hay menos de 100 balas en el grupo, se podrán añadir más.
-                if(this.bulletGroup.getLength() < 100){
-                    //Instancia de la bala
-                    this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
+         //Si hay menos de 100 balas en el grupo, se podrán añadir más.
+         if(this.bulletGroup.getLength() < 100){
+            //Instancia de la bala
+            this.bullet = new bullet(this, x, y, 'bullet'); //import bullet.js!
 
-                    //La añadimos al grupo
-                    this.bulletGroup.add(this.bullet);
+            //La añadimos al grupo
+            this.bulletGroup.add(this.bullet);
 
-                    // Sonido al instanciar
-                    this.sound.play('shoot');
+            // Sonido al instanciar
+            this.sound.play('shoot');
 
-                }
-            },
-            callbackScope: this,
-            loop: true
-        });
-        
+        }
         
         // COLISIONES DE LA BALA
         // *** OVERLAP *** detecta si dos objetos se superponen SIN provocar colision fisica

@@ -1,0 +1,17 @@
+Para cargar un atlas en Phaser, le damos un identificador, un archivo con la textura, y un JSON con la información de cómo está dividida la textura.
+
+this.load.atlas('cosas', 'cosas.png', 'cosas.json');
+
+Y, después, podemos usar ese atlas como cualquier spritesheet:
+
+this.anims.create({
+  key: 'enemigo_andar', 
+  frames: 
+     this.anims.generateFrameNames('cosas', {prefix:'prefijo_en_json'}),
+  repeat: -1 });
+
+this.add.sprite(400, 300, 'cosas');
+
+Es importante, al exportar el JSON, añadir el prefijo prefijo_en_json, que se puede sacar del JSON generado (en filename, y quitando los números):
+
+this.anims.generateFrameNames('cosas', {prefix:'prefijo_en_json'})

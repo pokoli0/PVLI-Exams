@@ -1,0 +1,40 @@
+Podemos saber la posición x es y del puntero en todo momento:
+
+// this es una scene
+let pointer = this.input.activePointer;
+
+console.log("Coordenada X", pointer.worldX);
+console.log("Coordenada Y", pointer.worldY);
+console.log("Está pulsado:", pointer.isDown);
+
+Para reacciones ante un evento del ratón:
+
+this.input.on('pointerup', pointer => {
+  if (pointer.leftButtonReleased()) {
+    // se ha soltado el botón izquierdo
+  }
+);
+
+Los Sprites que se marcan con setInteractive() pueden recibir eventos del ratón:
+// en el preload
+this.load.image('rock', 'rock.png');
+
+// en el create
+this.sprite = this.add.sprite(400, 300, 'rock').setInteractive();
+
+Una vez que un Sprite es interactivo, registramos con callbacks el comportamiento cuando se hace clic sobre ellos:
+
+this.sprite.on('pointerdown', pointer => {
+    // hacer algo
+});
+
+Para hacer que el menú contextual de la página web no se muestre con el botón derecho:
+
+scene.input.mouse.disableContextMenu();
+
+Para que el ratón no salga del área de juego:
+
+this.input.on('pointerdown', pointer => {
+    this.input.mouse.requestPointerLock();
+}, this);
+requestPointerLock() sólo funciona si se le llama como resultado a un evento lanzado por el usuario, por protección de los navegadores

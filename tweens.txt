@@ -1,0 +1,53 @@
+Para crear un tween usamos el objeto factoría de Scene
+
+// this es Scene
+let image = this.add.image(100, 80, 'fish', 0);
+
+// Animación para mover de lado a lado una imagen
+let tween = this.tweens.add({
+    targets: [ image ],
+    x: 700,
+    duration: 4000,
+    ease: 'Sine.easeInOut',
+    flipX: true,
+    yoyo: true,
+    repeat: -1,
+    delay: 10
+});
+
+Podemos suscribirnos a eventos que generan los Tweens:
+
+let tween = this.tweens.add({
+    targets: image,
+    x: 500,
+    ease: 'Power1',
+    duration: 3000
+});
+tween.on('stop', listener);
+
+function listener() {
+    // hacemos algo cuando termina el tween
+}
+
+Podemos encadenar tweens creando un timeline:
+
+// this es Scene
+var timeline = this.tweens.createTimeline();
+// Primer tween 
+timeline.add({
+    targets: image,
+    x: 600,
+    ease: 'Power1',
+    duration: 3000
+});
+// Segundo tween; se ejecuta al terminar el primero
+timeline.add({
+    targets: image,
+    y: 500,
+    ease: 'Power1',
+    duration: 3000
+});
+...
+
+timeline.play();
+

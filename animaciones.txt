@@ -1,0 +1,59 @@
+CARGAR UN SPRITESHEET
+Con spritesheet:
+
+// En el preload
+this.load.spritesheet('mummy',
+                      'mummy.animated.png',
+                      { frameWidth: 64, frameHeight: 64 });
+// En el create
+this.add.sprite(200, 360, 'mummy'); 
+
+ESTABLECER UN CICLO DE ANIMACIÓN
+Se pueden crear ciclos de animación con el AnimationManager
+
+// Como 'mummy' es un spritesheet, puede identificar los frames
+// this es Scene
+this.anims.create({
+      key: 'standing_mummy',
+      frames: this.anims.generateFrameNumbers('mummy', { start: 0, end: 5 }),
+      frameRate: 2, // Velocidad de la animación
+      repeat: -1    // Animación en bucle
+    });
+
+COMENZAR Y DETENER LA ANIMACION
+
+Con play() se ejecuta una animación:
+
+// `this` es un `Sprite` en la misma escena
+// que se ha creado la animación
+this.play('standing_mummy');
+play puede usar un segundo parámetro para indicar si queremos que se ignore si la animación ya estaba activada
+
+Para parar una animación, con stop():
+
+// `this` es un `Sprite`en la misma escena
+// que se ha creado la animación
+this.stop();
+
+EVENTOS EN ANIMACIONES
+Es posible hacer “callbacks” para ser informados de cuándo una animación se pone en marcha o se detiene usando los eventos de animación:
+
+// `this` es un `Sprite`en la misma escena
+// que se ha creado la animación
+this.on('animationrepeat-standing_mummy', () => {
+  // hacer algo
+});
+
+Para cambiar las opciones de repetición, usamos play(), con otro parámetro:
+
+sprite.play('walk', true); // *sí* repite
+sprite.play('walk', false); // no repite
+
+Cuando animamos una clase que hereda de Sprite, hay que llamar al preUpdate(t, dt) del padre (de Sprite) para que se produzca la animación:
+
+class Player extends Phaser.GameObjects.Sprite {
+  preUpdate(t, dt) {
+    super.preUpdate(t, dt)
+    // ... resto de cosas
+  }
+}

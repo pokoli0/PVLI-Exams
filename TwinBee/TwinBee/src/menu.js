@@ -43,6 +43,13 @@ export default class menu extends Phaser.Scene {
         //---------------BOTONES-----------------
         //Realmente es lo mismo pero usando el método setInteractive
 
+        //this.input.on('pointerup', pointer => {
+        //   if (pointer.leftButtonReleased()) {
+        //     // se ha soltado el botón izquierdo
+        //   }
+        // );
+        //También hay 'pointerdown', 'wheel', 'gameobjectover'
+
         //Boton 1
         const button1 = this.add.text(canvasWidth / 2, canvasHeight / 2 + 40, 'One player', {
             fontFamily: 'gummy',
