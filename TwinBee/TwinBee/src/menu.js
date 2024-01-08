@@ -81,8 +81,26 @@ export default class menu extends Phaser.Scene {
         button2.on('pointerdown', () => {
             this.playGame(2);
         });
+
+
+        //-------TWEEENS-------------
+        button1.on('pointerover', () => this.tweenTexto(button1, 1.2));  // Al pasar el cursor, iniciar el tween
+        button1.on('pointerout', () => this.tweenTexto(button1, 1));  // Al retirar el cursor, revertir el tween
+
     }
 
+    tweenTexto(texto, escalaFinal) {
+            // Crear un tween para cambiar la escala del texto
+            this.tweens.add({
+                targets: texto,
+                scaleX: escalaFinal,
+                scaleY: escalaFinal,
+                duration: 100,  // Duración del tween en milisegundos
+                ease: 'Linear',  // Función de easing (puedes ajustarla según tus preferencias)
+            });
+    }
+
+    //EASE: Power1, 
 
     //Cuando inicias la escena, puedes pasar un array de datos a través del método 
     //this.scene.start desde otra escena. Por ejemplo:
