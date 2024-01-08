@@ -11,7 +11,7 @@ export default class bullet extends Phaser.GameObjects.Container {
 
     }
 
-    preUpdate(t, dt) {
+    preUpdate() {
         this.movimiento();
 
         // Al salir del canvas se destruye

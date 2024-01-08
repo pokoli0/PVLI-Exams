@@ -1,0 +1,27 @@
+// `this` es una `Scene`
+this.player = this.add.sprite(100, 200, 'dude');
+this.physics.add.existing(this);
+
+Esto hace que el Sprite tenga la propiedad body de Arcade
+
+COLISIONAR CON LOS LÍMITES DEL MUNDO
+// `this` es un `Sprite` con físicas
+this.body.setCollideWorldBounds();
+
+
+Para saber si colisionamos con cualquier suelo:
+this.body.onFloor() //Muy útil para no saltar infinitamente
+
+
+Podemos rebotar al colisionar con elementos del mundo:
+this.body.setBounce(1,1);
+
+
+Podemos hacer que las colisiones no muevan un objeto con:
+this.body.setImmovable(true);
+El objeto se puede mover, pero las colisiones no lo “empujarán”
+
+
+Para hacer que un objeto se mueva en una determinada dirección:
+this.body.setVelocity(1,0);
+Se verá afectado por otras fuerzas, en particular, por la gravedad

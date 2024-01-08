@@ -1,7 +1,8 @@
 import twinbee from "./twinbee.js";
 import winbee from "./winbee.js";
 import bullet from "./bullet.js";
-import enemy from "./enemy.js";
+//import enemy from "./enemy.js";
+import EnemyGen from "./enemyGen.js";
 
 export default class level extends Phaser.Scene {
     constructor() {
@@ -83,8 +84,13 @@ export default class level extends Phaser.Scene {
         //this.time.removeEvent(timer); // pararlo
 
         //----------ENEMIES-----------
-        this.randomX = Math.random() * this.canvasWidth;
-        this.enemy = new enemy(this, this.randomX, 0, 'enemy');
+        // Generador de enemigos
+        this.enemyGenerator = new EnemyGen(this);
+        // this.randomX = Math.random() * this.canvasWidth;
+        // this.enemy = new enemy(this, this.randomX, 0);
+        
+
+        //-------------COLISIONES-------------
         
 
     }
@@ -108,16 +114,24 @@ export default class level extends Phaser.Scene {
         // COLISIONES DE LA BALA
         // *** OVERLAP *** detecta si dos objetos se superponen SIN provocar colision fisica
         // Phaser.Physics.Arcade.World.overlap(object1, object2, callback);
-        //this.physics.add.overlap(this.playerObj.getPlayerSprite(), this.bullet.getSprite(), this.destroyEnemy, null, this);
+        //this.physics.add.collider(this.enemy.getSprite(), this.bullet.getSprite(), this.destruyeEnemy, null, this);
     }
 
-    // El enemigo colisiona con una bala
-    destroyEnemy(){
-        
+    destruyeEnemy(){
+        this.enemy.getSprite().explode();
     }
 
     win(){
-        console.log("win");
+        //instanciamos Victory text durante 3 segundos (timer supongo)
+        //-------TIMER-----------
+        // this.timer = this.time.addEvent({
+        //     delay: 3000, // 3 segundos
+        //     callback: () => { console.log("win");
+        //     },
+        //     callbackScope: this, // this es scene!!!
+        //     loop: false //solo una vez!
+        // });
+        
     }
 
     

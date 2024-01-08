@@ -1,0 +1,22 @@
+Para estos casos, usamos overlap donde usábamos collider
+
+// create
+this.physics.add.overlap(player, group, (o1, o2) => {
+    // o1 y o2 se están tocando
+});
+
+// en update donde this es una Scene
+if(this.physics.overlap(this.player, this.platform)) {
+    textInfo.text = "Hay solape";
+}
+
+OBJETOS “INVISIBLES” O TRIGGERS
+Se pueden crear con add.zone(), de la escena, y luego lo añadimos a las físicas:
+
+// x, y, width, height
+let trigger = this.add.zone(300, 200, 200, 200);
+// Añade un body
+this.physics.world.enable(trigger);
+trigger.body.setAllowGravity(false);
+trigger.body.setImmovable(false);
+

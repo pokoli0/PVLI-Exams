@@ -1,0 +1,21 @@
+Para activar la detección de colisiones hay que crear un collider:
+
+this.physics.add.collider(player, group);
+
+Si queremos que nos avisen si se produce una colisión hay que incluir un callback:
+
+// create
+this.physics.add.collider(player, group, onCollision);
+
+// el método recibe dos parámetros, son los objetos que han colisionado
+function onCollision(obj1, obj2) {
+    // hacer algo
+}
+
+collide() (¡no add.collider()!) devuelve un booleano que indica si ha habido colisión:
+
+// en update, donde this es una Scene
+if(this.physics.collide(this.player, this.platform)) {
+    console.log("Hay colisión");
+}
+
