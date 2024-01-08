@@ -9,7 +9,7 @@ export default class twinbee extends Phaser.GameObjects.Container {
 
         this.speed = 100;
 
-        // CONTADOR DISPAROS
+        // DISPAROS
         this.cooldown = 1000; // 1 bala por segundo
         this.canShoot = true; // empezamos sin haber disparado
 
@@ -75,6 +75,7 @@ export default class twinbee extends Phaser.GameObjects.Container {
 
     shoot(){
         this.scene.instanciaBala(this.twinbee.x,this.twinbee.y);
+        this.twinbee.play('shoot');
     }
 
 }

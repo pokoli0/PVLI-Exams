@@ -9,7 +9,10 @@ export default class winbee extends Phaser.GameObjects.Container {
 
         this.speed = 100;
 
-        this.canShoot = true;
+        // DISPAROS
+        this.cooldown = 1000; // 1 bala por segundo
+        this.canShoot = true; // empezamos sin haber disparado
+
 
         // registra la teclas
         this.dcha = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -17,14 +20,12 @@ export default class winbee extends Phaser.GameObjects.Container {
         this.arriba = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         this.abajo = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         this.intro = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-
-        
     }
 
-    preUpdate(t, dt) {
+    preUpdate() {
 
         this.movimiento();
-        this.disparo();
+        this.tryShoot();
 
         // Método para que no se salga del canvas omg
         this.winbee.x = Phaser.Math.Clamp(this.winbee.x, 0, this.scene.sys.game.canvas.width);
@@ -55,16 +56,25 @@ export default class winbee extends Phaser.GameObjects.Container {
         }
     }
 
-    disparo(){
-        if(this.intro.isDown && this.canShoot){
-            this.scene.instanciaBala(this.winbee.x, this.winbee.y);
-            this.winbee.play('wshoot');
+    tryShoot(){
+        // Si se pulsa ESPACIO y aun no ha disparado
+        if (this.intro.isDown && this.canShoot) {
+        this.shoot(); // Dispara
+        this.canShoot = false; // Será false hasta que pase un segundo.
+        this.tiempoInicio = this.scene.time.now; // Registramos cuándo hemos disparado.
         }
+        // Si pasamos el cooldown (1 segundo), podremos volver a disparar.
+        if (this.scene.time.now - this.tiempoInicio >= this.cooldown) { 
+            this.canShoot = true;
 
-        //Si se vuelve a levantar tecla
-        if(this.space.isUp){ 
-            this.canShoot = true
+            // Resetea el tiempoInicio para que puedas contar nuevamente
+            // this.tiempoInicio = null;
         }
+    }
+
+    shoot(){
+        this.scene.instanciaBala(this.winbee.x,this.winbee.y);
+        this.winbee.play('wshoot');
     }
 
 }
