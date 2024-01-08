@@ -11,6 +11,7 @@ export default class twinbee extends Phaser.GameObjects.Container {
 
         // CONTADOR DISPAROS
         this.cooldown = 1000; // 1 bala por segundo
+        this.canShoot = true; // empezamos sin haber disparado
 
         // registra la teclas
         this.w = this.scene.input.keyboard.addKey('W');
@@ -27,12 +28,6 @@ export default class twinbee extends Phaser.GameObjects.Container {
     preUpdate() {
         this.movimiento();
         this.tryShoot();
-
-        // Al pulsar la tecla de espacio, registra el tiempo actual
-        if (Phaser.Input.Keyboard.JustDown(this.space)) {
-            this.tiempoInicio = this.scene.time.now; 
-            console.log(this.tiempoInicio)
-        }
 
         // Método para que no se salga del canvas omg
         this.twinbee.x = Phaser.Math.Clamp(this.twinbee.x, 0, this.scene.sys.game.canvas.width);
@@ -63,21 +58,23 @@ export default class twinbee extends Phaser.GameObjects.Container {
     }
 
     tryShoot(){
-        if (this.tiempoInicio && this.scene.time.now - this.tiempoInicio >= this.cooldown && !this.hasShoot) {
-            console.log("Ha pasado 1000 ms desde que pulsaste la tecla de espacio");
-            this.shoot();
+        // Si se pulsa ESPACIO y aun no ha disparado
+        if (this.space.isDown && this.canShoot) {
+        this.shoot(); // Dispara
+        this.canShoot = false; // Será false hasta que pase un segundo.
+        this.tiempoInicio = this.scene.time.now; // Registramos cuándo hemos disparado.
+        }
+        // Si pasamos el cooldown (1 segundo), podremos volver a disparar.
+        if (this.scene.time.now - this.tiempoInicio >= this.cooldown) { 
+            this.canShoot = true;
 
             // Resetea el tiempoInicio para que puedas contar nuevamente
-            this.tiempoInicio = null;
-            this.hasShoot = true;
+            // this.tiempoInicio = null;
         }
     }
 
     shoot(){
         this.scene.instanciaBala(this.twinbee.x,this.twinbee.y);
     }
-
-
-
 
 }
