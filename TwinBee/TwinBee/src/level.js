@@ -84,7 +84,8 @@ export default class level extends Phaser.Scene {
 
         //----------ENEMIES-----------
         this.randomX = Math.random() * this.canvasWidth;
-        this.enemy = new enemy(this, this.randomX, 0, "enemy");
+        this.enemy = new enemy(this, this.randomX, 0, 'enemy');
+        
 
     }
 

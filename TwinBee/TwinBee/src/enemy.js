@@ -7,6 +7,8 @@ export default class enemy extends Phaser.GameObjects.Container {
         // añade a la escena (level.js) el objeto entero
         this.scene.add.existing(this);
 
+        this.enemy.play('eidle');
+
         this.speed = 50;
     
     }
@@ -17,6 +19,6 @@ export default class enemy extends Phaser.GameObjects.Container {
 
     movement(){
         this.enemy.body.setVelocityY(this.speed);
-        this.enemy.play('eidle');
+        
     }
 }
